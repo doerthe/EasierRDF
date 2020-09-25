@@ -157,8 +157,13 @@ This is different for PG mode where nested triples need to be true. As this can 
 
 <h3 id="blank_nodes" aria-level="2" role="heading"><span class="secno">2.1 </span>Blank nodes</h3>
 
+<p class="RDFstarExt">
+In order to define the meaning of RDF* triples containing blank nodes, we intruduce an auxiliary function. Let B be a function from the IRIS union literals union blanknodes into IRIS union literals union {b} which is defined as follows: B(x) = b if x is a blank nodes, B(x)=x else.
+</p>
 
-<p> Suppose I is a simple interpretation and A is a mapping from a set of blank nodes to the universe IR of I. Define the mapping <span class="RDFstarExt">[I'+A] to be the aforementioned auxiliary function I' on <a href="https://www.w3.org/TR/rdf11-mt/#dfn-name" class="externalDFN">name</a>s and <a href="#dfn-rdf-triple" class="internalDFN">triple</a>s, and A on blank nodes on the set; that is, [I'+A](x)=I'(x) when x is a <a href="https://www.w3.org/TR/rdf11-mt/#dfn-name" class="externalDFN">name</a> or a <a href="#dfn-rdf-triple" class="internalDFN">triple</a>, and [I'+A](x)=A(x) when x is a blank node. Furthermore, define [I+A] to be the extension of I that covers all triples and graphs (not just ground ones) and that, in the condition for triples as given above for ground graphs, uses [I'+A] instead of I'.</span> Then the semantic conditions for an RDF<span class="RDFstarExt">*</span> graph are:
+
+<p> Suppose I is a simple interpretation, A is a mapping from a set of blank nodes to the universe IR of I and B as defined as above. Define the mapping <span class="RDFstarExt">[I'+A+B] to be the aforementioned auxiliary function I' on <a href="https://www.w3.org/TR/rdf11-mt/#dfn-name" class="externalDFN">name</a>s,
+let [I'+A+B] be IT(< B(s),B(p),B(o)>,[I'+A](s),[I'+A](p),[I'+A](o)) for <a href="#dfn-rdf-triple" class="internalDFN">triple</a>s of the form <<s p o>>, and A on blank nodes on the set; that is, [I'+A](x)=I'(x) when x is a <a href="https://www.w3.org/TR/rdf11-mt/#dfn-name" class="externalDFN">name</a> or a <a href="#dfn-rdf-triple" class="internalDFN">triple</a>, and [I'+A](x)=A(x) when x is a blank node. Furthermore, define [I+A] to be the extension of I that covers all triples and graphs (not just ground ones) and that, in the condition for triples as given above for ground graphs, uses [I'+A] instead of I'.</span> Then the semantic conditions for an RDF<span class="RDFstarExt">*</span> graph are:
 </p>
 
       <table>
