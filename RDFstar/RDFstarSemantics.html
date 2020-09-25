@@ -74,6 +74,8 @@ cite .bibref {
 
 <p>This section introduces RDF*-specific extensions of the notions defined in <a href="https://www.w3.org/TR/rdf11-mt/#simple-interpretations">Section 5</a> of [<cite><a class="bibref" href="#bib-RDF11-MT">RDF11-MT</a></cite>]. All text that has been copied from [<cite><a class="bibref" href="#bib-RDF11-MT">RDF11-MT</a></cite>] is given in black color, and the text that has been added to cover features specific to RDF* is marked in <span class="RDFstarExt">blue</span> color.</p>
 
+
+
 <p>A <dfn id="dfn-simple-interpretation">simple interpretation</dfn> I is a structure consisting of:</p>
 
 <table>
@@ -86,7 +88,8 @@ cite .bibref {
             set of sets of pairs &lt; x, y &gt; with x and y in IR .</p>
       <p>4. A mapping IS from IRIs into (IR union IP)</p>
       <p>5. A partial mapping IL from literals into IR </p>
-      <p class="RDFstarExt">6. A mapping IT from RDF* triples into IR.</p>
+      <p class="RDFstarExt">6. A symbol b which in not element of the set of blank nodes, IRIs or literals and also not element of IR or IP.</p>
+      <p class="RDFstarExt">7. A mapping IT from 4-tuples in ((IRIs union {b}) x (IRIs union {b}) x (IRIs union literals union {b})) x IR x (IR union IP) x IR into IR.</p>
      </td>
   </tr>
   </tbody>
@@ -112,7 +115,7 @@ cite .bibref {
     </tr>
 
     <tr>
-      <td class="semantictable"><span class="RDFstarExt">if E is an RDF* triple, then I'(E) = IT(E)</span></td>
+      <td class="semantictable"><span class="RDFstarExt">if E is an RDF* ground triple s p o, then I'(E) = IT(E, t) where t is the 3-tuple ( I'(s), I'(p), I'(o) )</span></td>
     </tr>
   </tbody>
 </table>
@@ -145,31 +148,9 @@ cite .bibref {
 <p> The final condition implies that the empty graph (the empty set of triples) is always true.</p>
 
 
-<p class="RDFstarExt">While the final condition requires the (simple) interpretation of every RDF* triple in the given RDF* graph to be true, the same is not required for any triple that occurs within a (nested) triple in the graph (unless that triple is also contained directly in the graph). When using RDF* in PG mode the condition covers such triples as well:</p>
+<p class="RDFstarExt">While the final condition requires the (simple) interpretation of every RDF* triple in the given RDF* graph to be true, the same is not required for any triple that occurs within a (nested) triple in the graph (unless that triple is also contained directly in the graph). 
+This is different for PG mode where nested triples need to be true. As this can also be represented in SA mode by simply adding the triples, we do not provide a semantic definition for PG mode and provide a mapping from PG mode representation into SA mode representation instead. This can be found at the end of the document</p>
 
-<table>
-<caption>Semantic conditions for ground graphs <span class="RDFstarExt">in PG mode</span>.</caption>
-        <tbody>
-          <tr>
-      <td class="semantictable"><span class="RDFstarExt">if E is a literal or an IRI, then I(E) = I'(E)</span></td>
-          </tr>
-
-          <tr>
-        <td class="semantictable"><p>if E is a ground triple s p o<code>.</code>
-          then I(E) = true if </p>
-        <p>I(p) is in IP and the pair &lt;<span class="RDFstarExt">I'</span>(s),<span class="RDFstarExt">I'</span>(o)&gt;
-          is in IEXT(I(p))</p>
-          <p>otherwise I(E) = false.</p></td>
-          </tr>
-
-          <tr>
-            <td class="semantictable">if E is a ground RDF<span class="RDFstarExt">*</span> graph then I(E) = false if I(E') =
-            false for some triple E' in <span class="RDFstarExt">T<sup>+</sup>(E)</span>, otherwise I(E) =true. <span class="RDFstarExt">(As defined in Section&nbsp;2.1 of [<cite><a class="bibref" href="#bib-HARTIG17">HARTIG17</a></cite>], T<sup>+</sup>(E) denotes the set of all RDF* triples that recursively occur in E.)</span></td>
-          </tr>
-        </tbody>
-</table>
-
-<p class="RDFstarExt">The definitions and statements in the remainder of this document consider both of the two modes in which RDF* may be used. That is, whenever in the remainder of this document a (simple) interpretation I is used as a function, the corresponding semantic conditions as defined above apply depending on whether RDF* is meant to be used SA mode or in PG mode.</p>
 
 <p>The sets IP and IR may overlap, indeed IP can be a subset of IR. Because of the domain conditions on IEXT, the denotation of the subject and object of any true triple will be in IR; so any IRI which occurs in a graph both as a predicate and as a subject or object will denote something in the intersection of IP and IR.</p>
 
